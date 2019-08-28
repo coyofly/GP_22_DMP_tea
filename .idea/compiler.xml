@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="GP_22_DMP" />
+        <module name="GP_22_DMP_tea" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="GP_22_DMP" target="1.5" />
+      <module name="GP_22_DMP_tea" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -9,14 +9,14 @@ import org.apache.spark.{SparkConf, SparkContext}
   */
 object txt2Parquet {
   def main(args: Array[String]): Unit = {
-    System.setProperty("hadoop.home.dir", "D:\\Huohu\\下载\\hadoop-common-2.2.0-bin-master")
+    System.setProperty("hadoop.home.dir", "/Users/H/hadoop/bin")
     // 判断路径是否正确
-    if(args.length != 2){
+    /*if(args.length != 2){
       println("目录参数不正确，退出程序")
       sys.exit()
-    }
+    }*/
     // 创建一个集合保存输入和输出目录
-    val Array(inputPath,outputPath) = args
+    val Array(inputPath,outputPath) = Array("/Users/H/Documents/IDEA_Projects/GP_22_DMP_tea/dir/2016-10-01_06_p1_invalid.1475274123982.log.FINISH","out1/")
     val conf = new SparkConf().setAppName(this.getClass.getName).setMaster("local[*]")
       // 设置序列化方式 采用Kyro序列化方式，比默认序列化方式性能高
       .set("spark.serializer","org.apache.spark.serializer.KryoSerializer")
@@ -123,7 +123,7 @@ object txt2Parquet {
     // 构建DF
     val df = sQLContext.createDataFrame(rowRDD,SchemaUtils.structtype)
     // 保存数据
-    df.write.parquet(outputPath)
+    df.coalesce(1).write.parquet(outputPath)
     sc.stop()
 
   }

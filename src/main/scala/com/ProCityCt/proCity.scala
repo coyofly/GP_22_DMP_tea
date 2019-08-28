@@ -12,7 +12,7 @@ import org.apache.spark.sql.SQLContext
 object proCity {
   def main(args: Array[String]): Unit = {
 
-    System.setProperty("hadoop.home.dir", "D:\\Huohu\\下载\\hadoop-common-2.2.0-bin-master")
+    System.setProperty("hadoop.home.dir", "/Users/H/hadoop/bin")
     // 判断路径是否正确
     if(args.length != 2){
       println("目录参数不正确，退出程序")
@@ -34,7 +34,7 @@ object proCity {
     df.registerTempTable("log")
     // 指标统计
     val result = sQLContext.sql("select provincename,cityname,count(*) from log group by provincename,cityname")
-
+      result.toDF().show()
     //result.coalesce(1).write.partitionBy("provincename","cityname").json(outputPath)
     // 加载配置文件  需要使用对应的依赖
     val load = ConfigFactory.load()
@@ -42,6 +42,7 @@ object proCity {
     prop.setProperty("user",load.getString("jdbc.user"))
     prop.setProperty("password",load.getString("jdbc.password"))
     result.write.mode("append").jdbc(load.getString("jdbc.url"),load.getString("jdbc.TableName"),prop)
+    result.coalesce(1).write.json("dir5/")
     sc.stop()
   }
 }
